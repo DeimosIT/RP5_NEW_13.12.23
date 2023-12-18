@@ -1,14 +1,30 @@
 import requests
 from selenium import webdriver
+from bs4 import BeautifulSoup
+from selenium.webdriver import ChromeOptions
 
 def get_url(url):
-    driver = webdriver.Chrome()
+
+
+    optinons = ChromeOptions()
+    #optinons.add_argument('--headless')
+    driver = webdriver.Chrome(options=optinons)
     #driver.get(url)
     driver.get(url=url)
 
-    with open('page_source\page_source.html', 'w', encoding='UTF-8') as file:
-        
-        file.write(driver.page_source)
+    try:
+        with open('page_source/page_source.html', 'w', encoding='UTF-8') as file:
+            file.write(driver.page_source)
+    except Exception as _ex:
+        print(_ex)
+    finally:
+        driver.close()
+        driver.quit()
+
+def get_info():
+
+    with open('page_source/page_source.html', 'r') as file:
+        src = file.read()
 
 
 def main():
